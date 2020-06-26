@@ -1,9 +1,9 @@
 import { Repository, getRepository } from 'typeorm';
-import ICroverageRepository from '../../../repositories/ICoverageRepository';
+import ICoverageRepository from '../../../repositories/ICoverageRepository';
 import Coverage from '../entities/Coverage';
 import ICreateCoverageDTO from '../../../dtos/ICreateCoverageDTO';
 
-class CoverageRepository implements ICroverageRepository {
+class CoverageRepository implements ICoverageRepository {
   private ormRepository: Repository<Coverage>;
 
   constructor() {
@@ -21,7 +21,6 @@ class CoverageRepository implements ICroverageRepository {
   public async findAll(): Promise<Coverage[] | undefined> {
     const coverage = await this.ormRepository.find({
       relations: ['user'],
-      where: { id },
     });
 
     return coverage;
