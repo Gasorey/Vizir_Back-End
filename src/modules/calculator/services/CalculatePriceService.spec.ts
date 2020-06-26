@@ -35,7 +35,7 @@ describe('CreatePlan', () => {
       fakeCoverageRepository,
     );
   });
-  it('Should be able to calculate a overtime value from a call', async () => {
+  it('Should be able to calculate the value with overtime', async () => {
     const user = await createUser.execute({
       name: 'Gabriel Asorey',
       email: 'gasorey@gmail.com',
@@ -53,15 +53,15 @@ describe('CreatePlan', () => {
       user_id: user.id,
     });
 
-    const overTimePrice = await calculatePrice.execute({
+    const value = await calculatePrice.execute({
       destination: 12,
       origin: 14,
       plan: 'FalaMais30',
       time: 48,
     });
-    expect(overTimePrice).toBeGreaterThan(0);
+    expect(value).toHaveProperty('valueWithoutPlan' && 'valueWithPlan');
   });
-  it('Should be able to return 0 when time is equal to minutes in a plan', async () => {
+  it('Should be able to calculate the value without overtime', async () => {
     const user = await createUser.execute({
       name: 'Gabriel Asorey',
       email: 'gasorey@gmail.com',
@@ -79,39 +79,13 @@ describe('CreatePlan', () => {
       user_id: user.id,
     });
 
-    const overTimePrice = await calculatePrice.execute({
+    const value = await calculatePrice.execute({
       destination: 12,
       origin: 14,
       plan: 'FalaMais30',
-      time: 30,
+      time: 8,
     });
-    expect(overTimePrice).toEqual(0);
-  });
-  it('Should be able to return 0 when time is lower then minutes in a plan', async () => {
-    const user = await createUser.execute({
-      name: 'Gabriel Asorey',
-      email: 'gasorey@gmail.com',
-      password: '123456',
-    });
-    await createPlan.execute({
-      minutes: 30,
-      name: 'FalaMais30',
-      user_id: user.id,
-    });
-    await createCoverage.execute({
-      destination: 12,
-      origin: 14,
-      price: 3.47,
-      user_id: user.id,
-    });
-
-    const overTimePrice = await calculatePrice.execute({
-      destination: 12,
-      origin: 14,
-      plan: 'FalaMais30',
-      time: 14,
-    });
-    expect(overTimePrice).toEqual(0);
+    expect(value).toHaveProperty('valueWithoutPlan' && 'valueWithPlan');
   });
   it('Should not be able to calculate the value without a coverage', async () => {
     const user = await createUser.execute({
@@ -133,13 +107,13 @@ describe('CreatePlan', () => {
       }),
     ).rejects.toBeInstanceOf(Error);
   });
-  it('Should not be able to calculate the overtime value without the plan', async () => {
+  it('Should not be able to calculate the value with a invalid plan', async () => {
     const user = await createUser.execute({
       name: 'Gabriel Asorey',
       email: 'gasorey@gmail.com',
       password: '123456',
     });
-    await createCoverage.execute({
+    const coverage = await createCoverage.execute({
       destination: 12,
       origin: 14,
       price: 3.47,
@@ -150,8 +124,8 @@ describe('CreatePlan', () => {
       calculatePrice.execute({
         destination: 12,
         origin: 14,
-        plan: 'FalaMais30',
         time: 14,
+        plan: 'non-existing plan',
       }),
     ).rejects.toBeInstanceOf(Error);
   });

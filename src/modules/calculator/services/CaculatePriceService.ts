@@ -10,7 +10,8 @@ interface IRequest {
 }
 
 interface IResponse {
-  value: number;
+  valueWithPlan: number;
+  valueWithoutPlan: number;
 }
 
 @injectable()
@@ -23,7 +24,7 @@ class CalculatePriceService {
     private coverageRepository: ICoverageRepository,
   ) {}
 
-  public async execute(data: IRequest): Promise<number> {
+  public async execute(data: IRequest): Promise<IResponse> {
     const { origin, destination, time, plan } = data;
 
     const findCoverage = await this.coverageRepository.findByOriginAndDestination(
@@ -40,26 +41,35 @@ class CalculatePriceService {
       throw new Error('Plan does not exist');
     }
 
-    switch (findPlan.minutes >= time) {
-      case false: {
-        const { price } = findCoverage;
+    const { price } = findCoverage;
 
-        const { minutes } = findPlan;
+    const { minutes } = findPlan;
 
-        const timeToPay = time - minutes;
+    const overTime = time - minutes;
 
-        const priceOverTime = price * 1.1;
+    if (overTime <= 0) {
+      const valueWithPlan = 0;
 
-        const value = timeToPay * priceOverTime;
+      const valueWithoutPlan = price * time;
 
-        return value;
-      }
-
-      default:
-        const value = 0;
-
-        return value;
+      const result = {
+        valueWithoutPlan,
+        valueWithPlan,
+      };
+      return result;
     }
+
+    const coveragePriceAdjust = price * 1.1;
+
+    const valueWithPlan = coveragePriceAdjust * overTime;
+
+    const valueWithoutPlan = price * time;
+
+    const result = {
+      valueWithoutPlan,
+      valueWithPlan,
+    };
+    return result;
   }
 }
 
