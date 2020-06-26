@@ -17,7 +17,7 @@ docker run --name vizir -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
   yarn typeorm migration:run
  ````
 
-<p>na pasta raíz do projeto crie dois arquivos um ".env"</p>
+<p>na pasta raíz do projeto crie o arquivo ".env"</p>
 <p>dentro do arquivo ".env" adicione uma sequencia de caracteres randomicos para usar de base para o JWT</p>
 
 
