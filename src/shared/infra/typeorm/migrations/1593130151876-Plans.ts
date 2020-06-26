@@ -16,6 +16,7 @@ export default class Plans1593130151876 implements MigrationInterface {
           {
             name: 'name',
             type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'minutes',

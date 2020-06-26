@@ -25,6 +25,15 @@ class PlansRepository implements IPlansRepository {
 
     return plan;
   }
+
+  public async findByName(name: string): Promise<Plan | undefined> {
+    const plan = await this.ormRepository.findOne({
+      where: {
+        name,
+      },
+    });
+    return plan;
+  }
 }
 
 export default PlansRepository;

@@ -19,6 +19,12 @@ class FakePlansRepository implements IPlansRepository {
   public async findAll(): Promise<Plan[] | undefined> {
     return this.plans;
   }
+
+  public async findByName(name: string): Promise<Plan | undefined> {
+    const myPlan = this.plans.find(plan => plan.name === name);
+
+    return myPlan;
+  }
 }
 
 export default FakePlansRepository;
