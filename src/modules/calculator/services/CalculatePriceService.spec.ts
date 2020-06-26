@@ -113,7 +113,7 @@ describe('CreatePlan', () => {
       email: 'gasorey@gmail.com',
       password: '123456',
     });
-    const coverage = await createCoverage.execute({
+    await createCoverage.execute({
       destination: 12,
       origin: 14,
       price: 3.47,
