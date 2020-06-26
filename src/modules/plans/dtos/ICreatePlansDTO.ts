@@ -1,4 +1,5 @@
 export default interface ICreatePlansDTO {
-  minute: number;
+  minutes: number;
   name: string;
+  user_id: string;
 }

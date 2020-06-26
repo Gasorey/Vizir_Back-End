@@ -15,7 +15,7 @@ class Plan {
   @Column('varchar')
   name: string;
 
-  @Column('number')
+  @Column('numeric')
   minutes: number;
 
   @Column('uuid')
