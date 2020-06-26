@@ -25,7 +25,7 @@ docker run --name vizir -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 <h2>Testes</h2>
 
 ````
-<p>yarn test</p>
+yarn test
 ````
 
 <h2>Subir servidor com live-reload</h2>
