@@ -22,6 +22,11 @@ export default class CoverageArea1593130122293 implements MigrationInterface {
             type: 'integer',
           },
           {
+            name: 'combination',
+            type: 'integer',
+            isUnique: true,
+          },
+          {
             name: 'price',
             type: 'numeric',
             scale: 2,

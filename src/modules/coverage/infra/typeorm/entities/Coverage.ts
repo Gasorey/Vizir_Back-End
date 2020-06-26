@@ -18,6 +18,9 @@ class Coverage {
   @Column('integer')
   destination: number;
 
+  @Column('integer')
+  combination: number;
+
   @Column('numeric')
   price: number;
 

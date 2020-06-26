@@ -2,6 +2,7 @@ import { Repository, getRepository } from 'typeorm';
 import ICoverageRepository from '../../../repositories/ICoverageRepository';
 import Coverage from '../entities/Coverage';
 import ICreateCoverageDTO from '../../../dtos/ICreateCoverageDTO';
+import IFindCoverageDTO from '../../../dtos/IFindCoverageDTO';
 
 class CoverageRepository implements ICoverageRepository {
   private ormRepository: Repository<Coverage>;
@@ -23,6 +24,21 @@ class CoverageRepository implements ICoverageRepository {
       relations: ['user'],
     });
 
+    return coverage;
+  }
+
+  public async findByOriginAndDestination(
+    data: IFindCoverageDTO,
+  ): Promise<Coverage | undefined> {
+    const { destination, origin } = data;
+
+    const coverage = await this.ormRepository.findOne({
+      relations: ['user'],
+      where: {
+        destination,
+        origin,
+      },
+    });
     return coverage;
   }
 }

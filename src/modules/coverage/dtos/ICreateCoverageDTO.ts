@@ -3,4 +3,5 @@ export default interface ICreateCoverageDTO {
   destination: number;
   price: number;
   user_id: string;
+  combination: number;
 }
