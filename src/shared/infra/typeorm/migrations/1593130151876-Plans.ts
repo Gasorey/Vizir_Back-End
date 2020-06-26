@@ -21,6 +21,10 @@ export default class Plans1593130151876 implements MigrationInterface {
             name: 'minutes',
             type: 'integer',
           },
+          {
+            name: 'user_id',
+            type: 'uuid',
+          },
         ],
       }),
     );

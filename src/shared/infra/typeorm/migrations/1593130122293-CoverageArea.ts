@@ -27,6 +27,10 @@ export default class CoverageArea1593130122293 implements MigrationInterface {
             scale: 2,
             precision: 10,
           },
+          {
+            name: 'user_id',
+            type: 'uuid',
+          },
         ],
       }),
     );
